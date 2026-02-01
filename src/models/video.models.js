@@ -1,53 +1,42 @@
-import mongoose,{Schema} from moongose;
-const userSchema=new Schema({
-    username:{
+import mongoose,{Schema} from mongoose;
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
+const videoSchema=new Schema({
+    videoFile:{
         type:String,
-        required:true,
-        unique:true,
-        lowercase:true,
-        trim:true,  //automatically will trim the white spaces
-        index:true, //will improve the in query optimization
+        required:true
 
     },
-    email:{
-        type:String,
-        required:true,
-        unique:true,
-        lowercase:true,
-        trim:true,  
-       
-
-    },
-    fullname:{
-        type:String,
-        required:true,
-        
-        index:true,
-        trim:true,  
-       
-
-    },
-    avatar:{
+    thumbnail:{
         type:String,
         required:true,
 
     },
-    coverImage:{
-        type:String
-
+    owner:{
+        type:Schema.Types.ObjectId,
+        ref:"User",
     },
-    watchHistory:[
-        {
-            type:Schema.Types.ObjectId,
-            ref:"Video"
-        }
-    ],
-    password:{
+    title:{
         type:String,
-        required:[true,"Password is required "]
+        reqired:true
     },
-    refreshToken:{
-        type:String
+    description:{
+        type:String,
+        required:true
+    },
+    duration:{
+        type:Number,//from cloudinary
+        required:true
+    },
+    views:{
+        type:Number,
+        default:0
+    },
+    isPublished:{
+        type:Boolean,
+        default:true
     }
+
+
 },{timestamps:true});
-export const User=new moongose.model("User",userSchema);
+videoSchema.plugin(mongooseAggregatePaginate);
+export const Video=new mongoose.model("Video",videoSchema)
