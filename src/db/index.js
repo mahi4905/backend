@@ -9,7 +9,7 @@ export const connectToDatabase = async () => {
     console.log(`Connected to MongoDB successfully:connectedurl:${connectedurl.connection.host }`);
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
-    process.exit(1);
+    process.exit(1);//bydefault avaliable in node
   }
 };
 export default connectToDatabase;
